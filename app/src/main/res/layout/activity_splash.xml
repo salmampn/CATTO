@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CATTO"
+        android:textAlignment="center"
+        android:textSize="48dp"
+        android:textColor="@color/white"
+        android:padding="16dp"/>
+
+    <!-- Image in the center -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="300dp"
+        android:layout_height="343dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/catto" /> <!-- Replace with your logo image -->
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="Login"/>
+
+    <!-- Sign Up Button -->
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonLogin"
+        android:layout_marginBottom="8dp"
+        android:text="Sign Up" />
+</RelativeLayout>
