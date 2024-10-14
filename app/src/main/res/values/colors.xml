@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="bgPrimary">#EBE2E2</color>
+    <color name="checked_out">#2F8D25</color>
+    <color name="main_color">#FF000000</color>
     <color name="vector_fill_color">#242222</color>
+    <color name="button_color">#242222</color>
+    <color name="button_text_color">#EBE2E2</color>
 </resources>

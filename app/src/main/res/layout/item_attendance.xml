@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/attendanceImage"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -22,7 +22,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/main_color"/>
 
         <TextView
             android:id="@+id/attendanceTime"
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="16sp"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:textColor="@color/main_color"/>
     </LinearLayout>
 
 </LinearLayout>

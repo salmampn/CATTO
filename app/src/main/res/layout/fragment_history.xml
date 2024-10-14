@@ -9,8 +9,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Attendance History"
-        android:textSize="20dp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_color"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:padding="8dp"/>
 
     <!-- Add RecyclerView or ListView here for displaying history -->
     <androidx.recyclerview.widget.RecyclerView

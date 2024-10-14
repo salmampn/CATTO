@@ -9,9 +9,10 @@
         android:layout_height="wrap_content"
         android:text="CATTO"
         android:textAlignment="center"
-        android:textSize="48dp"
-        android:textColor="@color/white"
-        android:padding="16dp"/>
+        android:textSize="48sp"
+        android:textColor="@color/main_color"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"/>
 
     <!-- Image in the center -->
     <ImageView
@@ -19,7 +20,7 @@
         android:layout_width="300dp"
         android:layout_height="343dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/catto" /> <!-- Replace with your logo image -->
+        android:src="@drawable/catto" />
 
     <!-- Login Button -->
     <Button
@@ -28,6 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/button_text_color"
         android:text="Login"/>
 
     <!-- Sign Up Button -->
@@ -37,5 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/buttonLogin"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/button_text_color"
         android:text="Sign Up" />
 </RelativeLayout>

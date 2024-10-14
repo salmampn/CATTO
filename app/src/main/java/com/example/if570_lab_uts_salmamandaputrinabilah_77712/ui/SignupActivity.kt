@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.if570_lab_uts_salmamandaputrinabilah_77712.R
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,7 @@ class SignupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_signup)
 
         editTextEmail = findViewById(R.id.editTextEmail)

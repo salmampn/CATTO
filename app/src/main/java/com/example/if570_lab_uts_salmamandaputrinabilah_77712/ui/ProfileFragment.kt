@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -19,7 +20,7 @@ class ProfileFragment : Fragment() {
     private lateinit var editTextName: EditText
     private lateinit var editTextNIM: EditText
     private lateinit var buttonSave: Button
-    private lateinit var buttonLogout: Button
+    private lateinit var buttonLogout: ImageButton
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 

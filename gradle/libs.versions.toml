@@ -25,6 +25,9 @@ materialVersion = "1.9.0"
 navigationRuntimeKtx = "2.8.2"
 navigationRuntimeKtxVersion = "2.6.0"
 recyclerview = "1.3.2"
+annotation = "1.8.2"
+lifecycleLivedataKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.8.4"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -55,6 +58,9 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 material-v190 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

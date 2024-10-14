@@ -5,6 +5,25 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CATTO"
+        android:textAlignment="center"
+        android:textSize="48sp"
+        android:textColor="@color/main_color"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:layout_marginTop="32dp"/>
+
+    <!-- Image in the center -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/catto" />
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
@@ -23,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/button_text_color"
         android:layout_marginTop="16dp"/>
 
     <TextView
