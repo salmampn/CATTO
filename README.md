@@ -17,6 +17,10 @@ CATTO is an application that allows users to perform attendance using photos and
 4. **Attendance History:** Displays all attendance data with the most recent records at the top. Attendance data from previous days will be shown below.
 5. **Profile Page:** Users can enter their name and student ID (NIM), and save this information to Firebase.
 
+## Application Demo
+
+Demo Link Video: https://youtu.be/JmV2keYVLn8
+
 ## Installation
 
 1. Clone this repository:
