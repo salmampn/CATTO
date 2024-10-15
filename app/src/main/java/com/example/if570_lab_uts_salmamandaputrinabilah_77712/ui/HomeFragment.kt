@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,6 +41,9 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
+
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
 
     private val CAMERA_REQUEST_CODE = 100
     private val GALLERY_REQUEST_CODE = 200
@@ -76,6 +81,33 @@ class HomeFragment : Fragment() {
             checkAttendanceStatus()
         }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        updateCurrentTime() // Update the current time every second
+        startUpdatingTime() // Start the time update process
+    }
+
+    private fun updateCurrentTime() {
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        currentTime.text = timeFormat.format(Date())
+    }
+
+    private fun startUpdatingTime() {
+        handler = Handler(Looper.getMainLooper())
+        runnable = object : Runnable {
+            override fun run() {
+                updateCurrentTime()  // Update the time each time this runs
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.post(runnable) // Start the initial run
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacks(runnable) // Stop the time update when the view is destroyed
     }
 
     private fun loadCheckoutStatus() {
