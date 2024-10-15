@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -40,6 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
 
     private val CAMERA_REQUEST_CODE = 100
+    private val GALLERY_REQUEST_CODE = 200
 
     private var capturedImageBitmap: Bitmap? = null // To hold the captured image temporarily
 
@@ -71,22 +73,66 @@ class HomeFragment : Fragment() {
         loadCheckoutStatus() // Call to load the checkout status at fragment creation
 
         buttonAttendance.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-                // Request camera permission
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_REQUEST_CODE
-                )
-            } else {
-                // Check attendance status before opening camera
-                checkAttendanceStatus()
-            }
-        }
+            val options = arrayOf("Take a Photo", "Choose from Gallery")
 
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Select Image")
+            builder.setItems(options) { dialog, which ->
+                when (which) {
+                    0 -> { // Take a photo
+                        if (ContextCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.CAMERA
+                            )
+                            != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            ActivityCompat.requestPermissions(
+                                requireActivity(),
+                                arrayOf(Manifest.permission.CAMERA),
+                                CAMERA_REQUEST_CODE
+                            )
+                        } else {
+                            openCamera()
+                        }
+                    }
+
+                    1 -> { // Choose from gallery
+                        if (ContextCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            )
+                            != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            ActivityCompat.requestPermissions(
+                                requireActivity(),
+                                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                                GALLERY_REQUEST_CODE
+                            )
+                        } else {
+                            openGallery()
+                        }
+                    }
+                }
+            }
+            builder.show()
+        }
         return view
     }
+//        buttonAttendance.setOnClickListener {
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED) {
+//                // Request camera permission
+//                ActivityCompat.requestPermissions(
+//                    requireActivity(),
+//                    arrayOf(Manifest.permission.CAMERA),
+//                    CAMERA_REQUEST_CODE
+//                )
+//            } else {
+//                // Check attendance status before opening camera
+//                checkAttendanceStatus()
+//            }
+//        }
+//        return view
 
     private fun loadCheckoutStatus() {
         val currentDateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -153,6 +199,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -160,29 +211,75 @@ class HomeFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_REQUEST_CODE) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openCamera()
             } else {
                 Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show()
             }
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery()
+            } else {
+                Toast.makeText(requireContext(), "Gallery permission denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == CAMERA_REQUEST_CODE) {
+//            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//                openCamera()
+//            } else {
+//                Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-            // Check if data is not null and handle the image
             capturedImageBitmap = data?.extras?.get("data") as? Bitmap
             if (capturedImageBitmap != null) {
                 showConfirmationDialog() // Show dialog for confirmation
             } else {
                 Toast.makeText(requireContext(), "Failed to capture image", Toast.LENGTH_SHORT).show()
             }
+        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val imageUri = data?.data
+            if (imageUri != null) {
+                val inputStream = requireActivity().contentResolver.openInputStream(imageUri)
+                capturedImageBitmap = BitmapFactory.decodeStream(inputStream)
+                showConfirmationDialog() // Show dialog for confirmation
+            } else {
+                Toast.makeText(requireContext(), "Failed to select image", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(requireContext(), "Camera action canceled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Action canceled", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+
+//        if (requestCode == CAMERA_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+//            // Check if data is not null and handle the image
+//            capturedImageBitmap = data?.extras?.get("data") as? Bitmap
+//            if (capturedImageBitmap != null) {
+//                showConfirmationDialog() // Show dialog for confirmation
+//            } else {
+//                Toast.makeText(requireContext(), "Failed to capture image", Toast.LENGTH_SHORT).show()
+//            }
+//        } else {
+//            Toast.makeText(requireContext(), "Camera action canceled", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     private fun showConfirmationDialog() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
